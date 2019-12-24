@@ -1,0 +1,61 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+#game {
+    display: flex;
+    height: 50%;
+    width: 50vw;
+    flex-wrap: wrap;
+    perspective: 600px;
+}
+
+.tarjeta {
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin: 15px 15px;
+    border-radius: 25px;
+    background-color: aqua;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 1s;
+}
+
+.rotar {
+    transform: translateX(-100%) rotateY(-180deg);
+}
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    backface-visibility: hidden;
+}
+
+.vueltaFront {
+    background: red;
+}
+
+.vueltaBack {
+    background: blue;
+    transform: rotateY(180deg);
+}
