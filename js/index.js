@@ -4,17 +4,53 @@ class juego {
         this.tablero = new Array();
         this.tarjetas = new Array();
         this.NivelActual;
-        this.CuadrosNivel = [6];
+        this.CuadrosNivel = [10];
         this.SeleccionadaUNO;
         this.SeleccionadaDOS;
         this.NTarjetasSeleccionadas = 0;
         this.ContadorVictoria = 0;
         this.container = document.getElementById("game");
+        this.time = true;
+        this.dataAPI = {
+            loading: true,
+            error: null,
+            data: {
+                info: {},
+                results: []
+            }
+        };
     }
 
-    iniciarJuego() {
+    fetchCharacters = async () => {
+        this.dataAPI = { loading: true, error: null };
+
+        try {
+            const response = await fetch(
+                `https://rickandmortyapi.com/api/character/`
+            );
+            const data = await response.json();
+
+            this.dataAPI = {
+                loading: false,
+                data: {
+                    info: data.info,
+                    results: data.results
+                }
+            };
+        } catch (error) {
+            this.dataAPI = { loading: false, error: error };
+        }
+    };
+
+    async iniciarJuego() {
         this.NivelActual = 0;
         this.elegirtarjeta = this.elegirtarjeta.bind(this);
+        await this.fetchCharacters();
+        console.log(this.dataAPI.data.info.count);
+        console.log(this.dataAPI.data.results[1]);
+
+        this.ramdom = this.getRndInteger(1, this.dataAPI.data.info.count);
+        console.log(this.ramdom);
 
         for (let i = 0; i < this.CuadrosNivel[this.NivelActual]; i++) {
             this.element.push(i + 1);
@@ -34,7 +70,9 @@ class juego {
             }
         }
 
-        this.tablero = this.shuffle(this.tablero);
+        this.tablero = this.tablero.sort(function() {
+            return Math.random() - 0.5;
+        });
 
         for (let i = 0; i < this.tarjetas.length; i++) {
             this.tarjetas[i] = document.createElement("div");
@@ -63,61 +101,50 @@ class juego {
     }
 
     elegirtarjeta(e) {
-        switch (this.NTarjetasSeleccionadas) {
-            case 0:
-                this.SeleccionadaUNO = e.target.dataset.position;
-                this.tarjetas[this.SeleccionadaUNO].classList.add("rotar");
-                this.eliminarEventos(this.SeleccionadaUNO);
-                this.NTarjetasSeleccionadas++;
-                break;
-            case 1:
-                this.SeleccionadaDOS = e.target.dataset.position;
-                this.tarjetas[this.SeleccionadaDOS].classList.add("rotar");
-                if (
-                    this.tablero[this.SeleccionadaUNO] ===
-                    this.tablero[this.SeleccionadaDOS]
-                ) {
-                    console.log("correcto");
-                    this.eliminarEventos(this.SeleccionadaDOS);
-                    this.ContadorVictoria++;
+        if (this.time === true) {
+            switch (this.NTarjetasSeleccionadas) {
+                case 0:
+                    this.SeleccionadaUNO = e.target.dataset.position;
+                    this.tarjetas[this.SeleccionadaUNO].classList.add("rotar");
+                    this.eliminarEventos(this.SeleccionadaUNO);
+                    this.NTarjetasSeleccionadas++;
+                    break;
+                case 1:
+                    this.SeleccionadaDOS = e.target.dataset.position;
+                    this.tarjetas[this.SeleccionadaDOS].classList.add("rotar");
                     if (
-                        this.ContadorVictoria ===
-                        this.CuadrosNivel[this.NivelActual]
+                        this.tablero[this.SeleccionadaUNO] ===
+                        this.tablero[this.SeleccionadaDOS]
                     ) {
+                        console.log("correcto");
+                        this.eliminarEventos(this.SeleccionadaDOS);
+                        this.ContadorVictoria++;
+                        if (
+                            this.ContadorVictoria ===
+                            this.CuadrosNivel[this.NivelActual]
+                        ) {
+                            setTimeout(() => {
+                                alert("Ganaste!!");
+                            }, 1000);
+                        }
+                    } else {
+                        console.log("incorrecto");
+                        this.time = false;
                         setTimeout(() => {
-                            alert("Ganaste!!");
+                            this.tarjetas[
+                                this.SeleccionadaUNO
+                            ].classList.remove("rotar");
+                            this.tarjetas[
+                                this.SeleccionadaDOS
+                            ].classList.remove("rotar");
+                            this.time = true;
                         }, 1000);
+                        this.agregarEventos(this.SeleccionadaUNO);
                     }
-                } else {
-                    console.log("incorrecto");
-                    setTimeout(() => {
-                        this.tarjetas[this.SeleccionadaUNO].classList.remove(
-                            "rotar"
-                        );
-                        this.tarjetas[this.SeleccionadaDOS].classList.remove(
-                            "rotar"
-                        );
-                    }, 1000);
-                    this.agregarEventos(this.SeleccionadaUNO);
-                }
-                this.NTarjetasSeleccionadas = 0;
-                break;
+                    this.NTarjetasSeleccionadas = 0;
+                    break;
+            }
         }
-    }
-
-    shuffle(arra1) {
-        var ctr = arra1.length,
-            temp,
-            index;
-
-        while (ctr > 0) {
-            index = Math.floor(Math.random() * ctr);
-            ctr--;
-            temp = arra1[ctr];
-            arra1[ctr] = arra1[index];
-            arra1[index] = temp;
-        }
-        return arra1;
     }
 
     getRndInteger(min, max) {
