@@ -1,7 +1,6 @@
 class juego {
     constructor() {
-        this.element = new Array();
-        this.tablero = new Array();
+        this.NumerosAPI = new Array();
         this.tarjetas = new Array();
         this.NivelActual;
         this.CuadrosNivel = [10];
@@ -46,38 +45,46 @@ class juego {
         this.NivelActual = 0;
         this.elegirtarjeta = this.elegirtarjeta.bind(this);
         await this.fetchCharacters();
-        console.log(this.dataAPI.data.info.count);
-        console.log(this.dataAPI.data.results[1]);
 
-        this.ramdom = this.getRndInteger(1, this.dataAPI.data.info.count);
-        console.log(this.ramdom);
-
-        for (let i = 0; i < this.CuadrosNivel[this.NivelActual]; i++) {
-            this.element.push(i + 1);
+        for (let i = 0; i < this.dataAPI.data.info.count; i++) {
+            this.NumerosAPI.push(i + 1);
         }
 
-        this.tablero.length = this.CuadrosNivel[this.NivelActual] * 2;
-        this.tarjetas.length = this.tablero.length;
+        this.NumerosAPI = this.NumerosAPI.sort(function() {
+            return Math.random() - 0.5;
+        });
 
-        var contador = 1;
+        this.NumerosAPI.length = 10;
 
-        for (let i = 0; i < this.tablero.length; i++) {
-            if (i >= this.CuadrosNivel[this.NivelActual]) {
-                this.tablero[i] = contador;
-                contador++;
-            } else {
-                this.tablero[i] = i + 1;
-            }
+        const LengthStatic = this.NumerosAPI.length;
+
+        for (let i = 0; i < LengthStatic; i++) {
+            this.NumerosAPI.push(this.NumerosAPI[i]);
         }
 
-        this.tablero = this.tablero.sort(function() {
+        this.tarjetas.length = this.NumerosAPI.length;
+
+        this.NumerosAPI = this.NumerosAPI.sort(function() {
             return Math.random() - 0.5;
         });
 
         for (let i = 0; i < this.tarjetas.length; i++) {
+            this.PersonajeTemporal = {};
+
+            try {
+                const response = await fetch(
+                    `https://rickandmortyapi.com/api/character/${this.NumerosAPI[i]}`
+                );
+                const data = await response.json();
+
+                this.PersonajeTemporal = data;
+            } catch (error) {
+                this.PersonajeTemporal = { error: error };
+            }
+
             this.tarjetas[i] = document.createElement("div");
             this.tarjetas[i].classList.add("tarjeta");
-            this.tarjetas[i].innerText = this.tablero[i];
+            this.tarjetas[i].innerText = this.NumerosAPI[i];
             this.tarjetas[i].setAttribute("data-position", i);
             this.tarjetas[i].addEventListener("click", this.elegirtarjeta);
             this.tarjetas[i].innerHTML =
@@ -85,8 +92,10 @@ class juego {
                 i +
                 '"></div><div class="back vueltaBack" data-position="' +
                 i +
-                '">' +
-                this.tablero[i] +
+                '" style="background-image: url(' +
+                this.PersonajeTemporal.image +
+                ');">' +
+                "" +
                 "</div>";
             this.container.appendChild(this.tarjetas[i]);
         }
@@ -113,8 +122,8 @@ class juego {
                     this.SeleccionadaDOS = e.target.dataset.position;
                     this.tarjetas[this.SeleccionadaDOS].classList.add("rotar");
                     if (
-                        this.tablero[this.SeleccionadaUNO] ===
-                        this.tablero[this.SeleccionadaDOS]
+                        this.NumerosAPI[this.SeleccionadaUNO] ===
+                        this.NumerosAPI[this.SeleccionadaDOS]
                     ) {
                         console.log("correcto");
                         this.eliminarEventos(this.SeleccionadaDOS);
