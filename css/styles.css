@@ -1,153 +1,191 @@
 * {
-    padding: 0;
-    margin: 0;
-    font-family: "Shlop W01 Regular";
+	padding: 0;
+	margin: 0;
+	font-family: 'Bangers', cursive;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-    background-color: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+	background-color: black;
 }
 
 #game {
-    display: flex;
-    height: 50%;
-    width: 50vw;
-    flex-wrap: wrap;
-    perspective: 600px;
+	display: flex;
+	height: 500px;
+	width: 500px;
+	flex-wrap: wrap;
+	perspective: 600px;
+	justify-content: space-around;
 }
 
 .tarjeta {
-    display: flex;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    margin: 15px 15px;
-    border-radius: 25px;
-    position: relative;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transform-origin: center right;
-    transition: transform 1s;
+	display: flex;
+	height: 90px;
+	width: 90px;
+	justify-content: center;
+	align-items: center;
+	margin: 5px 5px;
+	border-radius: 25px;
+	position: relative;
+	cursor: pointer;
+	transform-style: preserve-3d;
+	transform-origin: center right;
+	transition: transform 1s;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .rotar {
-    transform: translateX(-100%) rotateY(-180deg);
+	transform: translateX(-100%) rotateY(-180deg);
 }
 
 .front,
 .back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    font-size: 35px;
-    backface-visibility: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	font-size: 35px;
+	backface-visibility: hidden;
 }
 
 .vueltaFront {
-    background-image: url(../img/background.jpg);
-    background-size: cover;
-    border-radius: 15px;
+	background-image: url(../img/background.jpg);
+	background-size: cover;
+	border-radius: 15px;
 }
 
 .vueltaBack {
-    transform: rotateY(180deg);
-    background-size: cover;
-    border-radius: 15px;
+	transform: rotateY(180deg);
+	background-size: cover;
+	border-radius: 15px;
 }
 
 .video-container {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .video-container video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	opacity: 50%;
 }
 
 .video-container .contenido {
-    position: relative;
-    z-index: 1;
-    margin: 0 auto;
-    text-align: center;
-    max-width: 1000px;
+	position: relative;
+	z-index: 1;
+	margin: 0 auto;
+	text-align: center;
+	width: 50vw;
+}
+
+.contenido img {
+	width: 100%;
 }
 
 .button {
-    cursor: pointer;
-    overflow: hidden;
-    padding: 20px;
-    border: solid 2px #ffff00;
-    background-color: #ffff00;
-    border-radius: 35px;
-    position: relative;
-    top: 80%;
-    margin-top: 100px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    text-align: center;
-    font-family: sans-serif;
-    font-weight: 600;
-    letter-spacing: 5px;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-text-stroke: 0px white;
-}
-.button::after {
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    content: "";
-    width: 10px;
-    height: 2px;
-    background: white;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    box-shadow: 0px 5px 0px white, 0px 10px 0px white, 0px 15px 0px white,
-        0px 20px 0px white, 0px 25px 0px white, 0px 30px 0px white,
-        0px 35px 0px white, 0px 40px 0px white, 0px 45px 0px white,
-        0px 50px 0px white, 0px 55px 0px white;
-}
-.button:hover::after {
-    width: 160px;
-    z-index: -1;
-    -webkit-text-stroke: 4px white;
-    box-shadow: -10px 5px 0px white, -20px 10px 0px white, -30px 15px 0px white,
-        -40px 20px 0px white, -50px 25px 0px white, -60px 30px 0px white,
-        -70px 35px 0px white, -80px 40px 0px white, -90px 45px 0px white,
-        -100px 50px 0px white, -110px 55px 0px white;
-}
-.button:hover {
-    color: #fff;
+	cursor: pointer;
+	overflow: hidden;
+	padding: 20px;
+	border: solid 2px #ffff00;
+	background-color: #ffff00;
+	border-radius: 35px;
+	position: relative;
+	top: 80%;
+	margin-top: 100px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 200px;
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: 600;
+	letter-spacing: 5px;
+	transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+	-webkit-text-stroke: 0px white;
 }
 
-@font-face {
-    font-family: "Shlop W01 Regular";
-    src: url("Fonts/1414915/7c384f4e-6702-42c1-b553-1ef1bb8eea77.eot?#iefix");
-    src: url("Fonts/1414915/7c384f4e-6702-42c1-b553-1ef1bb8eea77.eot?#iefix")
-            format("eot"),
-        url("Fonts/1414915/2e9e5610-e77b-4633-a03e-799480edb0c6.woff2")
-            format("woff2"),
-        url("Fonts/1414915/df786a85-552e-45ab-97e7-247d73b7b538.woff")
-            format("woff"),
-        url("Fonts/1414915/58bcc420-225e-4d6e-a848-90ae7581c925.ttf")
-            format("truetype");
+.contenido a {
+	color: rgb(56, 56, 56);
+	text-decoration: none;
+}
+
+.button::after {
+	transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+	content: '';
+	width: 10px;
+	height: 2px;
+	background: white;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	box-shadow: 0px 5px 0px white, 0px 10px 0px white, 0px 15px 0px white,
+		0px 20px 0px white, 0px 25px 0px white, 0px 30px 0px white,
+		0px 35px 0px white, 0px 40px 0px white, 0px 45px 0px white,
+		0px 50px 0px white, 0px 55px 0px white;
+}
+.button:hover::after {
+	width: 160px;
+	z-index: -1;
+	-webkit-text-stroke: 4px white;
+	box-shadow: -10px 5px 0px white, -20px 10px 0px white, -30px 15px 0px white,
+		-40px 20px 0px white, -50px 25px 0px white, -60px 30px 0px white,
+		-70px 35px 0px white, -80px 40px 0px white, -90px 45px 0px white,
+		-100px 50px 0px white, -110px 55px 0px white;
+}
+.button:hover {
+	color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+}
+@media screen and (max-width: 768px) {
+	.video-container .contenido {
+		width: 80vw;
+	}
+	.button {
+		width: 150px;
+	}
+	#game {
+		height: 400px;
+		width: 300px;
+	}
+
+	.tarjeta {
+		height: 60px;
+		width: 60px;
+	}
+}
+@media screen and (max-width: 480px) {
+}
+@media screen and (max-width: 320px) {
+	#game {
+		height: 380px;
+		width: 280px;
+	}
+
+	.tarjeta {
+		height: 50px;
+		width: 50px;
+	}
 }
