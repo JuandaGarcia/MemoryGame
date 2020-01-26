@@ -14,7 +14,16 @@
 		<link rel="stylesheet" href="../css/game.css" />
 	</head>
 	<body>
+		<div id="cargando">
+			<img class="rotate" src="../img/portal.png" alt="" />
+			<p>Loading...</p>
+		</div>
 		<div id="game"></div>
+		<div class="info-game">
+			<div id="movimientos">Movimientos: 0</div>
+			<div id="tiempo">00:00</div>
+			<button onclick="iniciar.juegoNuevo()">Juego nuevo</button>
+		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 		<script src="../js/index.js"></script>
 	</body>

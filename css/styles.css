@@ -13,6 +13,26 @@ body {
 	background-color: black;
 }
 
+.hiden {
+	display: none;
+}
+
+#cargando {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 150px;
+	height: 50px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+	color: white;
+	position: relative;
+}
+
+#cargando img {
+	height: 70%;
+}
+
 #game {
 	display: flex;
 	height: 500px;
@@ -20,6 +40,34 @@ body {
 	flex-wrap: wrap;
 	perspective: 600px;
 	justify-content: space-around;
+}
+
+.info-game {
+	width: 500px;
+	height: 40px;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	bottom: 40px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.info-game button {
+	height: 70%;
+	width: 20%;
+	background-color: #ffff00;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.info-game button:hover {
+	font-size: 1em;
+	background-color: #ffff34;
 }
 
 .tarjeta {
@@ -102,6 +150,7 @@ body {
 
 .contenido img {
 	width: 100%;
+	margin-bottom: 100px;
 }
 
 .button {
@@ -113,7 +162,6 @@ body {
 	border-radius: 35px;
 	position: relative;
 	top: 80%;
-	margin-top: 100px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 200px;
@@ -170,6 +218,9 @@ body {
 		height: 400px;
 		width: 300px;
 	}
+	.info-game {
+		width: 300px;
+	}
 
 	.tarjeta {
 		height: 60px;
@@ -183,9 +234,25 @@ body {
 		height: 380px;
 		width: 280px;
 	}
+	.info-game {
+		width: 280px;
+	}
 
 	.tarjeta {
 		height: 50px;
 		width: 50px;
+	}
+}
+
+.rotate {
+	animation: rotation 4s infinite linear;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(359deg);
 	}
 }
