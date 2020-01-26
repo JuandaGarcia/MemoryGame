@@ -76,7 +76,6 @@ class juego {
 		this.NumerosAPI = this.NumerosAPI.sort(function() {
 			return Math.random() - 0.5
 		})
-		this.container.style.display = 'none'
 		for (let i = 0; i < this.tarjetas.length; i++) {
 			this.PersonajeTemporal = {}
 

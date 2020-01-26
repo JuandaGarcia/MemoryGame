@@ -34,7 +34,7 @@ body {
 }
 
 #game {
-	display: flex;
+	display: none;
 	height: 500px;
 	width: 500px;
 	flex-wrap: wrap;
@@ -153,6 +153,16 @@ body {
 	margin-bottom: 100px;
 }
 
+.noSelect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
 .button {
 	cursor: pointer;
 	overflow: hidden;
@@ -225,6 +235,9 @@ body {
 	.tarjeta {
 		height: 60px;
 		width: 60px;
+	}
+	.info-game button {
+		width: 35%;
 	}
 }
 @media screen and (max-width: 480px) {
