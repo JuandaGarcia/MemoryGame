@@ -70,9 +70,9 @@ body {
 	background-color: #ffff34;
 }
 
-.tarjeta {
+.card {
 	display: flex;
-	height: 90px;
+	height: 115px;
 	width: 90px;
 	justify-content: center;
 	align-items: center;
@@ -90,6 +90,7 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
+	background-position: center;
 }
 
 .rotar {
@@ -120,27 +121,20 @@ body {
 	border-radius: 15px;
 }
 
-.video-container {
+.home-container {
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: url('/img/background-home.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
-.video-container video {
-	position: absolute;
-	top: 0;
-	left: 0;
-	object-fit: cover;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
-	opacity: 50%;
-}
-
-.video-container .contenido {
+.home-container .contenido {
 	position: relative;
 	z-index: 1;
 	margin: 0 auto;
@@ -218,7 +212,7 @@ body {
 @media screen and (max-width: 1024px) {
 }
 @media screen and (max-width: 768px) {
-	.video-container .contenido {
+	.home-container .contenido {
 		width: 80vw;
 	}
 	.button {
@@ -232,7 +226,7 @@ body {
 		width: 300px;
 	}
 
-	.tarjeta {
+	.card {
 		height: 60px;
 		width: 60px;
 	}
@@ -251,7 +245,7 @@ body {
 		width: 280px;
 	}
 
-	.tarjeta {
+	.card {
 		height: 50px;
 		width: 50px;
 	}

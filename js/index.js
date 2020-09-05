@@ -1,239 +1,162 @@
-class juego {
+class game {
 	constructor() {
-		this.NumerosAPI = new Array()
-		this.tarjetas = new Array()
-		this.NivelActual
-		this.CuadrosNivel = [10]
-		this.SeleccionadaUNO
-		this.SeleccionadaDOS
-		this.NTarjetasSeleccionadas = 0
+		this.cardsNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+		this.cards = new Array()
+		this.firstCardSelected
+		this.secondCardSelected
+		this.numberCardsSelected = 0
 		this.ContadorVictoria = 0
-		this.movimientos = 0
-		this.containerCargando = document.getElementById('cargando')
-		this.containerMovimientos = document.getElementById('movimientos')
+		this.moves = 0
+		this.containerMovimientos = document.getElementById('moves')
 		this.container = document.getElementById('game')
 		this.time = true
-		this.dataAPI = {
-			loading: true,
-			error: null,
-			data: {
-				info: {},
-				results: []
-			}
-		}
-		//Cronometro
-		this.primermovimiento = false
-		this.hora = 0
-		this.minutos = 0
-		this.segundos = 0
-		this.decimales = 0
-		this.tiempo = ''
+
+		//Timer
+		this.firstMove = false
+		this.hour = 0
+		this.minutes = 0
+		this.seconds = 0
+		this.decimals = 0
+		this.timeText = ''
 		this.stop = true
 	}
 
-	fetchCharacters = async () => {
-		this.dataAPI = { loading: true, error: null }
+	startGame() {
+		this.selectCard = this.selectCard.bind(this)
 
-		try {
-			const response = await fetch(`https://rickandmortyapi.com/api/character/`)
-			const data = await response.json()
-
-			this.dataAPI = {
-				loading: false,
-				data: {
-					info: data.info,
-					results: data.results
-				}
-			}
-		} catch (error) {
-			this.dataAPI = { loading: false, error: error }
-		}
-	}
-
-	async iniciarJuego() {
-		this.NivelActual = 0
-		this.elegirtarjeta = this.elegirtarjeta.bind(this)
-		await this.fetchCharacters()
-
-		for (let i = 0; i < this.dataAPI.data.info.count; i++) {
-			this.NumerosAPI.push(i + 1)
-		}
-
-		this.NumerosAPI = this.NumerosAPI.sort(function() {
-			return Math.random() - 0.5
-		})
-
-		this.NumerosAPI.length = 10
-
-		const LengthStatic = this.NumerosAPI.length
+		const LengthStatic = this.cardsNumbers.length
 
 		for (let i = 0; i < LengthStatic; i++) {
-			this.NumerosAPI.push(this.NumerosAPI[i])
+			this.cardsNumbers.push(this.cardsNumbers[i])
 		}
 
-		this.tarjetas.length = this.NumerosAPI.length
+		this.cards.length = this.cardsNumbers.length
 
-		this.NumerosAPI = this.NumerosAPI.sort(function() {
+		this.cardsNumbers = this.cardsNumbers.sort(function () {
 			return Math.random() - 0.5
 		})
-		for (let i = 0; i < this.tarjetas.length; i++) {
-			this.PersonajeTemporal = {}
 
-			try {
-				const response = await fetch(
-					`https://rickandmortyapi.com/api/character/${this.NumerosAPI[i]}`
-				)
-				const data = await response.json()
-
-				this.PersonajeTemporal = data
-			} catch (error) {
-				this.PersonajeTemporal = { error: error }
-			}
-
-			this.tarjetas[i] = document.createElement('div')
-			this.tarjetas[i].classList.add('tarjeta')
-			this.tarjetas[i].innerText = this.NumerosAPI[i]
-			this.tarjetas[i].setAttribute('data-position', i)
-			this.tarjetas[i].addEventListener('click', this.elegirtarjeta)
-			this.tarjetas[i].innerHTML =
-				'<div class="front vueltaFront" data-position="' +
-				i +
-				'"></div><div class="back vueltaBack" data-position="' +
-				i +
-				'" style="background-image: url(' +
-				this.PersonajeTemporal.image +
-				');">' +
-				'' +
-				'</div>'
-			this.container.appendChild(this.tarjetas[i])
+		for (let i = 0; i < this.cards.length; i++) {
+			this.cards[i] = document.createElement('div')
+			this.cards[i].classList.add('card')
+			this.cards[i].addEventListener('click', this.selectCard)
+			this.cards[
+				i
+			].innerHTML = `<div class="front vueltaFront" data-position="${i}"></div>
+										<div class="back vueltaBack" data-position="${i}" style="background-image: url('../img/cards/${this.cardsNumbers[i]}.png');"></div>`
+			this.container.appendChild(this.cards[i])
 		}
-		this.containerCargando.style.display = 'none'
 		this.container.style.display = 'flex'
 	}
 
-	agregarEventos(n) {
-		this.tarjetas[n].addEventListener('click', this.elegirtarjeta)
+	addEvents(n) {
+		this.cards[n].addEventListener('click', this.selectCard)
 	}
 
-	eliminarEventos(n) {
-		this.tarjetas[n].removeEventListener('click', this.elegirtarjeta)
+	removeEvents(n) {
+		this.cards[n].removeEventListener('click', this.selectCard)
 	}
 
-	elegirtarjeta(e) {
+	selectCard(e) {
 		if (this.time === true) {
-			switch (this.NTarjetasSeleccionadas) {
+			switch (this.numberCardsSelected) {
 				case 0:
-					if (!this.primermovimiento) {
-						this.IniciarCronometro()
+					if (!this.firstMove) {
+						this.startTimer()
 					}
-					this.primermovimiento = true
-					this.SeleccionadaUNO = e.target.dataset.position
-					this.tarjetas[this.SeleccionadaUNO].classList.add('rotar')
-					this.eliminarEventos(this.SeleccionadaUNO)
-					this.NTarjetasSeleccionadas++
-					this.movimientos++
-					this.containerMovimientos.innerText = `Movimientos: ${this.movimientos}`
+					this.firstMove = true
+					this.firstCardSelected = e.target.dataset.position
+					this.cards[this.firstCardSelected].classList.add('rotar')
+					this.removeEvents(this.firstCardSelected)
+					this.numberCardsSelected++
+					this.moves++
+					this.containerMovimientos.innerText = `Movimientos: ${this.moves}`
 					break
 				case 1:
-					this.movimientos++
-					this.containerMovimientos.innerText = `Movimientos: ${this.movimientos}`
-					this.SeleccionadaDOS = e.target.dataset.position
-					this.tarjetas[this.SeleccionadaDOS].classList.add('rotar')
+					this.moves++
+					this.containerMovimientos.innerText = `Movimientos: ${this.moves}`
+					this.secondCardSelected = e.target.dataset.position
+					this.cards[this.secondCardSelected].classList.add('rotar')
 					if (
-						this.NumerosAPI[this.SeleccionadaUNO] ===
-						this.NumerosAPI[this.SeleccionadaDOS]
+						this.cardsNumbers[this.firstCardSelected] ===
+						this.cardsNumbers[this.secondCardSelected]
 					) {
-						console.log('correcto')
-						this.eliminarEventos(this.SeleccionadaDOS)
+						this.removeEvents(this.secondCardSelected)
 						this.ContadorVictoria++
-						if (this.ContadorVictoria === this.CuadrosNivel[this.NivelActual]) {
+						if (this.ContadorVictoria === this.cardsNumbers.length / 2) {
 							setTimeout(() => {
-								this.victoria()
+								this.victory()
 							}, 1000)
 						}
 					} else {
-						console.log('incorrecto')
 						this.time = false
 						setTimeout(() => {
-							this.tarjetas[this.SeleccionadaUNO].classList.remove('rotar')
-							this.tarjetas[this.SeleccionadaDOS].classList.remove('rotar')
+							this.cards[this.firstCardSelected].classList.remove('rotar')
+							this.cards[this.secondCardSelected].classList.remove('rotar')
 							this.time = true
 						}, 1000)
-						this.agregarEventos(this.SeleccionadaUNO)
+						this.addEvents(this.firstCardSelected)
 					}
-					this.NTarjetasSeleccionadas = 0
+					this.numberCardsSelected = 0
 					break
 			}
 		}
 	}
 
-	victoria() {
-		this.PausarTiempo()
+	victory() {
+		this.PauseTime()
 		swal(
-			'Ganaste!',
-			`Movimientos: ${this.movimientos} \n\n Tiempo: ${this.tiempo}`,
+			'You won the game!',
+			`Moves: ${this.moves} \n\n Time: ${this.timeText}`,
 			'success'
-		).then(() => {
-			console.log('hola')
-		})
+		)
 	}
 
-	juegoNuevo() {
+	newGame() {
 		location.reload()
 	}
 
-	getRndInteger(min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min
-	}
+	//Timer functions
 
-	//Cronometro
-	IniciarCronometro() {
+	startTimer() {
 		if (this.stop == true) {
 			this.stop = false
-			this.cronometro()
+			this.timer()
 		}
 	}
 
-	cronometro() {
+	timer() {
 		if (this.stop == false) {
-			this.decimales++
-			if (this.decimales > 9) {
-				this.decimales = 0
-				this.segundos++
+			this.decimals++
+			if (this.decimals > 9) {
+				this.decimals = 0
+				this.seconds++
 			}
-			if (this.segundos > 59) {
-				this.segundos = 0
-				this.minutos++
+			if (this.seconds > 59) {
+				this.seconds = 0
+				this.minutes++
 			}
-			if (this.minutos > 59) {
-				this.minutos = 0
-				this.hora++
+			if (this.minutes > 59) {
+				this.minutes = 0
+				this.hour++
 			}
-			this.verCronometro()
-			setTimeout('iniciar.cronometro()', 100)
+			this.seeTimer()
+			setTimeout('newGame.timer()', 100)
 		}
 	}
-	verCronometro() {
-		if (this.hora < 10) this.tiempo = ''
-		else this.tiempo = this.hora
-		if (this.minutos < 10) this.tiempo = this.tiempo + '0'
-		this.tiempo = this.tiempo + this.minutos + ':'
-		if (this.segundos < 10) this.tiempo = this.tiempo + '0'
-		this.tiempo = this.tiempo + this.segundos
-		document.getElementById('tiempo').innerHTML = this.tiempo
+	seeTimer() {
+		if (this.hour < 10) this.timeText = ''
+		else this.timeText = this.hour
+		if (this.minutes < 10) this.timeText = this.timeText + '0'
+		this.timeText = this.timeText + this.minutes + ':'
+		if (this.seconds < 10) this.timeText = this.timeText + '0'
+		this.timeText = this.timeText + this.seconds
+		document.getElementById('timeText').innerHTML = this.timeText
 	}
-	PausarTiempo() {
+	PauseTime() {
 		this.stop = true
-	}
-	ReiniciarTiempo() {
-		if (this.stop == false) {
-			this.stop = true
-		}
-		this.hora = this.minutos = this.segundos = this.decimales = 0
-		this.tiempo = ''
-		this.verCronometro()
 	}
 }
 
-const iniciar = new juego()
-iniciar.iniciarJuego()
+const newGame = new game()
+newGame.startGame()
