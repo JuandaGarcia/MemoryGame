@@ -2,39 +2,30 @@
 	padding: 0;
 	margin: 0;
 	font-family: 'Bangers', cursive;
+	box-sizing: border-box;
 }
 
 body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	flex-direction: column;
+	min-height: 100vh;
 	width: 100%;
+	padding: 5em 0;
 	background-color: black;
+}
+
+body.home {
+	padding: 0;
 }
 
 .hiden {
 	display: none;
 }
 
-#cargando {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	width: 150px;
-	height: 50px;
-	background-color: rgba(0, 0, 0, 0.5);
-	border-radius: 5px;
-	color: white;
-	position: relative;
-}
-
-#cargando img {
-	height: 70%;
-}
-
 #game {
-	display: none;
+	display: flex;
 	height: 500px;
 	width: 500px;
 	flex-wrap: wrap;
@@ -45,9 +36,8 @@ body {
 .info-game {
 	width: 500px;
 	height: 40px;
-	background-color: rgba(255, 255, 255, 0.5);
-	position: absolute;
-	bottom: 40px;
+	background-color: rgba(255, 255, 255, 0.7);
+	margin-bottom: 2em;
 	border-radius: 5px;
 	display: flex;
 	justify-content: space-around;
@@ -57,7 +47,10 @@ body {
 .info-game button {
 	height: 70%;
 	width: 20%;
-	background-color: #ffff00;
+	background: #000000;
+	color: #fff;
+	background: -webkit-linear-gradient(to right, #434343, #000000);
+	background: linear-gradient(to right, #434343, #000000);
 	outline: none;
 	border: none;
 	border-radius: 5px;
@@ -67,7 +60,19 @@ body {
 
 .info-game button:hover {
 	font-size: 1em;
-	background-color: #ffff34;
+}
+
+.info-geez {
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.7);
+	width: 500px;
+	padding: 1em;
+	margin-top: 2em;
+}
+
+.info-geez h2,
+.info-geez p {
+	font-family: 'Poppins', sans-serif;
 }
 
 .card {
@@ -93,7 +98,7 @@ body {
 	background-position: center;
 }
 
-.rotar {
+.rotateCard {
 	transform: translateX(-100%) rotateY(-180deg);
 }
 
@@ -109,13 +114,13 @@ body {
 	backface-visibility: hidden;
 }
 
-.vueltaFront {
+.cardFront {
 	background-image: url(../img/background.jpg);
 	background-size: cover;
 	border-radius: 15px;
 }
 
-.vueltaBack {
+.cardBack {
 	transform: rotateY(180deg);
 	background-size: cover;
 	border-radius: 15px;
@@ -134,7 +139,7 @@ body {
 	background-position: center;
 }
 
-.home-container .contenido {
+.home-container .content {
 	position: relative;
 	z-index: 1;
 	margin: 0 auto;
@@ -142,7 +147,7 @@ body {
 	width: 50vw;
 }
 
-.contenido img {
+.content img {
 	width: 100%;
 	margin-bottom: 100px;
 }
@@ -161,8 +166,10 @@ body {
 	cursor: pointer;
 	overflow: hidden;
 	padding: 20px;
-	border: solid 2px #ffff00;
-	background-color: #ffff00;
+	color: #fff;
+	background: #000000;
+	background: -webkit-linear-gradient(to right, #434343, #000000);
+	background: linear-gradient(to right, #434343, #000000);
 	border-radius: 35px;
 	position: relative;
 	top: 80%;
@@ -177,7 +184,7 @@ body {
 	-webkit-text-stroke: 0px white;
 }
 
-.contenido a {
+.content a {
 	color: rgb(56, 56, 56);
 	text-decoration: none;
 }
@@ -209,8 +216,6 @@ body {
 	color: #fff;
 }
 
-@media screen and (max-width: 1024px) {
-}
 @media screen and (max-width: 768px) {
 	.home-container .contenido {
 		width: 80vw;
@@ -219,34 +224,40 @@ body {
 		width: 150px;
 	}
 	#game {
-		height: 400px;
+		height: auto;
 		width: 300px;
 	}
 	.info-game {
 		width: 300px;
 	}
 
+	.info-geez {
+		width: 300px;
+	}
+
 	.card {
-		height: 60px;
+		height: 85px;
 		width: 60px;
 	}
 	.info-game button {
 		width: 35%;
 	}
 }
-@media screen and (max-width: 480px) {
-}
 @media screen and (max-width: 320px) {
 	#game {
-		height: 380px;
+		height: auto;
 		width: 280px;
 	}
 	.info-game {
 		width: 280px;
 	}
 
+	.info-geez {
+		width: 280px;
+	}
+
 	.card {
-		height: 50px;
+		height: 75px;
 		width: 50px;
 	}
 }
