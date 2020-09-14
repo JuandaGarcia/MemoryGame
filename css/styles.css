@@ -1,8 +1,8 @@
 * {
 	padding: 0;
 	margin: 0;
-	font-family: 'Bangers', cursive;
 	box-sizing: border-box;
+	font-weight: bolde;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 	min-height: 100vh;
 	width: 100%;
 	padding: 5em 0;
-	background-color: black;
+	background-image: url(../img/background-home.jpg);
 }
 
 body.home {
@@ -24,6 +24,62 @@ body.home {
 	display: none;
 }
 
+.backButton {
+	position: absolute;
+	left: 2em;
+	top: 2em;
+	height: 2em;
+	width: 5em;
+	background: #000000;
+	color: #000;
+	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.soundControl {
+	position: absolute;
+	right: 2em;
+	top: 2em;
+}
+
+.soundControl .soundInput {
+	display: none;
+}
+
+.soundButton {
+	height: 2.5em;
+	width: 2.5em;
+	border-radius: 50%;
+	cursor: pointer;
+	background: -webkit-linear-gradient(to right, #434343, #000000);
+	background: linear-gradient(to right, #434343, #000000);
+}
+
+.soundIcon {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+	background: url('../img/icons/mute.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 50%;
+}
+
+.soundControl .soundInput:checked + .soundButton {
+	background: -webkit-linear-gradient(to right, #000000, #434343);
+	background: linear-gradient(to right, #000000, #434343);
+}
+.soundControl .soundInput:checked + .soundButton .soundIcon {
+	background: url('../img/icons/volume-up.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 50%;
+}
+
 #game {
 	display: flex;
 	height: 500px;
@@ -31,6 +87,11 @@ body.home {
 	flex-wrap: wrap;
 	perspective: 600px;
 	justify-content: space-around;
+}
+
+.pauseGame {
+	pointer-events: none;
+	opacity: 0.8;
 }
 
 .info-game {
@@ -47,6 +108,7 @@ body.home {
 .info-game button {
 	height: 70%;
 	width: 20%;
+	margin-left: 0.5em;
 	background: #000000;
 	color: #fff;
 	background: -webkit-linear-gradient(to right, #434343, #000000);
@@ -63,18 +125,19 @@ body.home {
 }
 
 .info-geez {
-	border-radius: 5px;
-	background-color: rgba(255, 255, 255, 0.7);
 	width: 500px;
-	padding: 1em;
 	margin-top: 2em;
 }
 
-.info-geez h2,
-.info-geez p {
-	font-family: 'Poppins', sans-serif;
+.col {
+	color: white;
 }
-
+.btn-success {
+	color: #fff;
+	border-color: #ffff99;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 5rem;
+}
 .card {
 	display: flex;
 	height: 115px;
@@ -96,6 +159,7 @@ body.home {
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
 	background-position: center;
+	background-size: cover;
 }
 
 .rotateCard {
@@ -133,7 +197,7 @@ body.home {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: url('/img/background-home.jpg');
+	background: url('../img/background-home.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -215,20 +279,32 @@ body.home {
 .button:hover {
 	color: #fff;
 }
+@media screen and (max-width: 1024px) {
+	#game {
+		height: auto;
+		width: 95%;
+	}
+	.card {
+		height: 20vw;
+		width: 18%;
+	}
 
+	.info-game {
+		width: 95%;
+		padding: 0 1em;
+		margin-top: 2em;
+	}
+}
 @media screen and (max-width: 768px) {
 	.home-container .contenido {
-		width: 80vw;
+		width: 120vw;
 	}
 	.button {
 		width: 150px;
 	}
-	#game {
-		height: auto;
-		width: 300px;
-	}
-	.info-game {
-		width: 300px;
+
+	.card {
+		border-radius: 1em;
 	}
 
 	.info-geez {
@@ -236,20 +312,24 @@ body.home {
 	}
 
 	.card {
-		height: 85px;
-		width: 60px;
+		height: 20vw;
+		width: 18%;
 	}
 	.info-game button {
 		width: 35%;
 	}
+	.info-game button {
+		width: 20%;
+		font-size: 80%;
+	}
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 360px) {
 	#game {
 		height: auto;
-		width: 280px;
+		width: 100%;
 	}
 	.info-game {
-		width: 280px;
+		width: 95%;
 	}
 
 	.info-geez {
@@ -259,6 +339,28 @@ body.home {
 	.card {
 		height: 75px;
 		width: 50px;
+	}
+	.info-game button {
+		width: 25%;
+		font-size: 80%;
+	}
+	.card {
+		height: 25vw;
+		width: 20%;
+	}
+}
+
+@media screen and (max-width: 280px) {
+	.info-game {
+		width: 95%;
+		flex-wrap: wrap;
+		height: auto;
+		padding: 1em;
+	}
+	.info-game button {
+		width: 60%;
+		margin: 0.5em;
+		height: 2.5em;
 	}
 }
 

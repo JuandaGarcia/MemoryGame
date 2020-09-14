@@ -4,56 +4,89 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Game</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<title>Ge'ez Memory Game</title>
 		<link rel="icon" href="../img/icon.png" />
-		<link
-			href="https://fonts.googleapis.com/css?family=Bangers&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"rel="stylesheet" />
 		<link rel="stylesheet" href="../css/styles.css" />
 		<link rel="stylesheet" href="../css/game.css" />
 	</head>
 	<body>
+		<button class="backButton" onclick="goBack()">Back</button>
+		<label class="soundControl">
+			<input checked class="soundInput" type="checkbox" id="sound_input">
+			<div class="soundButton">
+				<i class="soundIcon"></i>
+			</div>
+		</label>
 		<div class="info-game">
 			<div id="moves">Moves: 0</div>
 			<div id="timeText">00:00</div>
+			<button onclick="newGame.PauseGame()" id="pause">Pause</button>
 			<button class="noSelect" onclick="newGame.newGame()">New Game</button>
 		</div>
 		<div id="game"></div>
-		<div class="info-geez">
-			<h2>Ge’ez script</h2>
-			<hr />
-			<p>
-				The Ge’ez script is used for different languages of Ethiopia and
-				Eritrea, mostly Ethiopian semitic languages (Ge’ez, Amharic, Tigrinya,
-				Tigre, Harari, Sebat Bet Gurage…), but also Cushitic, like Bilen, or
-				Sudanic, like Me’en. It has started as an abjad, in which only the
-				consonants are written, in its case 26 consonantal letters, and was used
-				to write the Ge’ez language until 330 A.D. It then evolved to an
-				abugida, or an alphasyllabary, in which each glyph represents a
-				consonant-vowel sequence. As the vowels are represented as diacritics in
-				an irregular way, it can be viewed as a syllabary of 287 syllables.
-			</p>
-			<br />
-			<h2>Ge’ez script numerals</h2>
-			<hr />
-			<p>
-				The Ge’ez numerals, which are actually used to write Amharic numbers
-				(like Arabic or Hindu-Arabic numerals are used for English numerals),
-				were formed either by borrowing the Coptic numerals, or by using Ge’ez
-				letters and adding a top and a bottom signs to indicate they were
-				numerals or not letters, which is how Coptic and Greek numerals were
-				formed. There is no symbol for zero, but specific symbols for the units
-				(1-9), the tens (10-90), one for hundred, and another one for ten
-				thousand, wich is a combination of the symbol for hundred (as 10,000 is
-				100 multiplied by 100).
-			</p>
-		</div>
+		<div class="info-geez"></div>
+		<div class="container">
+			<div class="row mb-4">
+				<div class="col text-center">
+					<h3>About Ge’ez</h3>
+					<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to Read</a>
+				</div>
+			</div>
+			<!-- basic modal -->
+			<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="#basicModal"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<h4>Ge’ez script</h4>
+							The Ge’ez script is used for different languages of Ethiopia and
+							Eritrea, mostly Ethiopian semitic languages (Ge’ez, Amharic, Tigrinya,
+							Tigre, Harari, Sebat Bet Gurage…), but also Cushitic, like Bilen, or
+							Sudanic, like Me’en. It has started as an abjad, in which only the
+							consonants are written, in its case 26 consonantal letters, and was used
+							to write the Ge’ez language until 330 A.D. It then evolved to an
+							abugida, or an alphasyllabary, in which each glyph represents a
+							consonant-vowel sequence. As the vowels are represented as diacritics in
+							an irregular way, it can be viewed as a syllabary of 287 syllables.
+							</p>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<h3>Ge’ez script numeralsy</h3>
+							<p>
+								The Ge’ez numerals, which are actually used to write Amharic numbers
+								(like Arabic or Hindu-Arabic numerals are used for English numerals),
+								were formed either by borrowing the Coptic numerals, or by using Ge’ez
+								letters and adding a top and a bottom signs to indicate they were
+								numerals or not letters, which is how Coptic and Greek numerals were
+								formed. There is no symbol for zero, but specific symbols for the units
+								(1-9), the tens (10-90), one for hundred, and another one for ten
+								thousand, wich is a combination of the symbol for hundred (as 10,000 is
+								100 multiplied by 100).
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							
+						</div>
+					</div>
+				</div>
+				<audio id="success_audio">
+					<source src="../audio/success.mp3" type="audio/mpeg">
+				</audio>
+				<audio id="fail_audio">
+					<source src="../audio/fail.mp3" type="audio/mpeg">
+				</audio>
 		<!-- Library -->
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 		<script src="../js/index.js"></script>
 	</body>

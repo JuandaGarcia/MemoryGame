@@ -1,3 +1,12 @@
+/**
+ *  A Ge'ez number memory game program, based on
+ * shuffling algorithm and flipping cards used to memorize and learn
+ * ge'ez numbers
+ */
+function goBack() {
+	window.history.back()
+}
+
 class game {
 	constructor() {
 		this.cardsNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -7,8 +16,13 @@ class game {
 		this.numberCardsSelected = 0
 		this.foundCouples = 0
 		this.moves = 0
+		this.pause = false
 		this.movesElement = document.getElementById('moves')
 		this.gameElement = document.getElementById('game')
+		this.successAudio = document.getElementById('success_audio')
+		this.failAudio = document.getElementById('fail_audio')
+		this.soundInput = document.getElementById('sound_input')
+		this.pauseButton = document.getElementById('pause')
 
 		//Timer
 		this.time = true
@@ -34,6 +48,7 @@ class game {
 		}
 
 		//Shuffle the array randomly for the game
+		//extend the time limit a bit longer if needed
 		this.cardsNumbers = this.cardsNumbers.sort(function () {
 			return Math.random() - 0.5
 		})
@@ -109,7 +124,10 @@ class game {
 						this.removeEvents(this.secondCardSelected)
 						//increments the counter of pairs found
 						this.foundCouples++
-
+						if (this.soundInput.checked) {
+							this.successAudio.currentTime = 0
+							this.successAudio.play()
+						}
 						//if the number of pairs found is equal to the number of cards (20/2) you win the game
 						if (this.foundCouples === this.cardsNumbers.length / 2) {
 							setTimeout(() => {
@@ -118,6 +136,10 @@ class game {
 						}
 					} else {
 						this.time = false
+						if (this.soundInput.checked) {
+							this.failAudio.currentTime = 0
+							this.failAudio.play()
+						}
 						//if they are not the same, remove the rotate class so that they remain as they were
 						setTimeout(() => {
 							this.cards[this.firstCardSelected].classList.remove('rotateCard')
@@ -188,6 +210,21 @@ class game {
 
 	PauseTime() {
 		this.stop = true
+	}
+
+	PauseGame() {
+		if (!this.pause) {
+			this.stop = true
+			this.gameElement.classList.add('pauseGame')
+			this.pause = true
+			this.pauseButton.innerText = 'Play'
+		} else {
+			this.stop = false
+			this.gameElement.classList.remove('pauseGame')
+			this.pause = false
+			this.pauseButton.innerText = 'Pause'
+			this.timer()
+		}
 	}
 }
 
